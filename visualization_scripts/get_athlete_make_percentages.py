@@ -31,6 +31,10 @@ def get_athlete_make_percentages(input):
     df_avg_cj_2 = []
     df_avg_cj_3 = []
     
+    df_best_sn = []
+    df_best_cj = []
+    df_best_total = []
+    
     df_num_sn_attempts = []
     df_num_made_snatches = []
     df_num_missed_snatches = []
@@ -90,6 +94,19 @@ def get_athlete_make_percentages(input):
         df_names.append(athlete)
         num_comps = len(athlete_comps)
         df_num_comps.append(num_comps)
+        
+        made_snatches = [int(i) for i in snatches if 'x' not in i]
+        made_cjs = [int(i) for i in cjs if 'x' not in i]
+        
+        if len(made_snatches) != 0:
+            df_best_sn.append(np.max(made_snatches))
+        else:
+            df_best_sn.append(0)
+            
+        if len(made_cjs) != 0:
+            df_best_cj.append(np.max(made_cjs))
+        else: 
+            df_best_cj.append(0)
         
         num_made_snatches = 0
         num_made_cjs = 0
@@ -291,6 +308,7 @@ def get_athlete_make_percentages(input):
         "% SN 1st Attempts Successful" : df_made_sn_1_percent,
         "% SN 2nd Attempts Successful" : df_made_sn_2_percent,
         "% SN 3rd Attempts Successful" : df_made_sn_3_percent,
+        "Best SN" : df_best_sn,
         "Avg. SN 1st Attempt" : df_avg_sn_1,
         "Avg. SN 2nd Attempt" : df_avg_sn_2,
         "Avg. SN 3rd Attempt" : df_avg_sn_3,
@@ -298,6 +316,7 @@ def get_athlete_make_percentages(input):
         "% CJ 1st Attempts Successful" : df_made_cj_1_percent,
         "% CJ 2nd Attempts Successful" : df_made_cj_2_percent,
         "% CJ 3rd Attempts Successful" : df_made_cj_3_percent,
+        "Best CJ" : df_best_cj,
         "Avg. CJ 1st Attempt" : df_avg_cj_1,
         "Avg. CJ 2nd Attempt" : df_avg_cj_2,
         "Avg. CJ 3rd Attempt" : df_avg_cj_3,
@@ -323,6 +342,7 @@ def get_output_schema():
         "% SN 1st Attempts Successful" : prep_decimal(),
         "% SN 2nd Attempts Successful" : prep_decimal(),
         "% SN 3rd Attempts Successful" : prep_decimal(),
+        "Best SN" : prep_int(),
         "Avg. SN 1st Attempt" : prep_int(),
         "Avg. SN 2nd Attempt" : prep_int(),
         "Avg. SN 3rd Attempt" : prep_int(),
@@ -330,6 +350,7 @@ def get_output_schema():
         "% CJ 1st Attempts Successful" : prep_decimal(),
         "% CJ 2nd Attempts Successful" : prep_decimal(),
         "% CJ 3rd Attempts Successful" : prep_decimal(),
+        "Best CJ" : prep_int(),
         "Avg. CJ 1st Attempt" : prep_int(),
         "Avg. CJ 2nd Attempt" : prep_int(),
         "Avg. CJ 3rd Attempt" : prep_int(),
